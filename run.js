@@ -18,6 +18,7 @@ function (t) {
         a = o(3).net,
         c = o(4),
         d = i(window);
+        _.stop=true;
 _.run=function(){a.post("/act/campus/ajax/index", {action: "getVoucher"}, {splitFlowByCode: !1})
 .done(function (t) {
     console.log(t.code,errCode(t));
@@ -27,7 +28,7 @@ _.run=function(){a.post("/act/campus/ajax/index", {action: "getVoucher"}, {split
         window.location="https://console.qcloud.com/account/voucher";
         return;
     }
-    else
+    else if(_.stop)
     {
         _.run();
     }
