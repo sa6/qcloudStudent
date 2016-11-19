@@ -21,14 +21,15 @@ function (t) {
         _.stop=true;
 _.run=function(){a.post("/act/campus/ajax/index", {action: "getVoucher"}, {splitFlowByCode: !1})
 .done(function (t) {
-    console.log(t.code,errCode(t));
+    var err=errCode(t);
+    console.log(t,err);
     if(t.code==0)
     {
         alert("已经抢到了");
         window.location="https://console.qcloud.com/account/voucher";
         return;
     }
-    else if(_.stop)
+    else if(_.stop&&err)
     {
         _.run();
     }
@@ -36,7 +37,10 @@ _.run=function(){a.post("/act/campus/ajax/index", {action: "getVoucher"}, {split
 }
 var errCode=function(t)
 {
-                    if ("NOT-LOGINED" === t.code) return false;
+                    if ("NOT-LOGINED" === t.code) {
+                        s.showLoginBox();
+                        return false;
+                    }
                     var o = "\u77e5\u9053\u4e86",
                         n = t.msg || "\u7cfb\u7edf\u7e41\u5fd9\uff0c\u8bf7\u7a0d\u540e\u518d\u8bd5\u3002",
                         i = "\u6e29\u99a8\u63d0\u793a",
